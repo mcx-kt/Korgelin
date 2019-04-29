@@ -1,4 +1,4 @@
-package net.toliner.forgelin
+package net.toliner.forgelin.container
 
 import net.minecraftforge.eventbus.EventBusErrorMessage
 import net.minecraftforge.eventbus.api.BusBuilder
@@ -61,6 +61,7 @@ class KotlinModContainer(
     private val constructMod = fun(event: LifecycleEventProvider.LifecycleEvent) {
         try {
             logger.debug(LOADING, "Loading mod instance $modId of type $className")
+            Class.forName(className)  // Invoke this to initialize class.
             modInstance = modClass.objectInstance
                     ?: throw IllegalStateException("KotlinModClass must bbe object declaration.")
             logger.debug(LOADING, "Loaded mod instance $modId of type $className")
@@ -86,6 +87,7 @@ class KotlinModContainer(
 
     init {
         logger.debug("Creating KotlinModContainer instance for $className with classLoader $modClassLoader & ${KotlinModContainer::class.java.classLoader}")
+        contextExtension = Supplier { KotlinModLoadingContext(this) }
         createTrigger(ModLoadingStage.CONSTRUCT, constructMod, false)
         createTrigger(ModLoadingStage.CREATE_REGISTRIES)
         createTrigger(ModLoadingStage.LOAD_REGISTRIES)
@@ -95,10 +97,8 @@ class KotlinModContainer(
         createTrigger(ModLoadingStage.PROCESS_IMC)
         createTrigger(ModLoadingStage.COMPLETE, completeLoading)
         configHandler = Optional.of(Consumer { event -> this.eventBus.post(event) })
-        val context = KotlinModLoadingContext(this)
-        contextExtension = Supplier { context }
         try {
-            modClass = Class.forName(className, true, modClassLoader).kotlin
+            modClass = Class.forName(className, false, modClassLoader).kotlin
             logger.debug(LOADING, "Loaded modclass $className with $modClassLoader")
         } catch (e: Throwable) {
             logger.error(LOADING, "Failed to load class $className", e)

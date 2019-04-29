@@ -20,7 +20,7 @@ plugins {
 apply plugin: "kotlin"
 apply plugin: "net.minecraftforge.gradle"
 
-version = mod_version
+version = mod_version + '-' + kotlin_version
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -39,8 +39,16 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
-                    source sourceSets.main
+                
+            }
+        }
+
+        testClient {
+            parent runs.client
+
+            mods {
+                ForgelinTest {
+                    source sourceSets.test
                 }
             }
         }
