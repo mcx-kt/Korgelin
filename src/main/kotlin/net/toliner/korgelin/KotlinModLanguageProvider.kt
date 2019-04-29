@@ -1,4 +1,4 @@
-package net.toliner.forgelin
+package net.toliner.korgelin
 
 import net.minecraftforge.forgespi.language.ILifecycleEvent
 import net.minecraftforge.forgespi.language.IModLanguageProvider
@@ -30,5 +30,5 @@ class KotlinModLanguageProvider : IModLanguageProvider {
 
     }
 
-    override fun name() = "kotlin-yklb"
+    override fun name() = "korgelin"
 }

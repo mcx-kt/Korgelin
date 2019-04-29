@@ -1,4 +1,4 @@
-package net.toliner.forgelin.container
+package net.toliner.korgelin.container
 
 import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.fml.ModLoadingContext

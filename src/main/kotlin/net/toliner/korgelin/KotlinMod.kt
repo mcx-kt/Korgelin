@@ -1,4 +1,4 @@
-package net.toliner.forgelin
+package net.toliner.korgelin
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)

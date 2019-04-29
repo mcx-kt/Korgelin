@@ -1,13 +1,13 @@
-package net.toliner.forgelin
+package net.toliner.korgelin
 
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent
-import net.toliner.forgelin.container.KotlinModLoadingContext
+import net.toliner.korgelin.container.KotlinModLoadingContext
 import org.apache.logging.log4j.LogManager
 
-@KotlinMod("forgelin-test")
+@KotlinMod("korgelin-test")
 object KotlinTestMod {
 
     private val logger = LogManager.getLogger()!!

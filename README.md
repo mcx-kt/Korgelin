@@ -1,9 +1,10 @@
-# Forgelin
-Fork of [Emberwalker's Forgelin](https://github.com/Emberwalker/Forgelin).
+# Korgelin
+Fork of
+[Shadowfacts's Forgelin](https://github.com/shadowfacts/Forgelin).
 
 ## Additions
-- Shades the Kotlin standard library, runtime, and reflect libraries so you don't have to.
-- Provides a Forge `ILanguageAdapter` for using Kotlin `object` classes as your main mod class.
+- Shades kotlinx-serialization-runtime
+- Support 1.13 and older version.
 
 ## Usage
 ```groovy

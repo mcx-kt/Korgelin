@@ -1,4 +1,4 @@
-package net.toliner.forgelin
+package net.toliner.korgelin
 
 import net.minecraftforge.fml.loading.LogMarkers.LOADING
 import net.minecraftforge.forgespi.language.IModInfo
