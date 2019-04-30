@@ -1,0 +1,7 @@
+extra["groupName"] = "net.toliner.korgelin"
+extra["modVersion"] = "1.0.0"
+extra["modName"] = "Korgelin"
+extra["kotlinVersion"] = "1.3.31"
+extra["annotationsVersion"] = "17.0.0"
+extra["coroutineVersion"] = "1.2.1"
+extra["serializationVersion"] = "0.11.0"
