@@ -1,0 +1,62 @@
+# Gradle
+# Build your Java project and run tests with Gradle using a Gradle wrapper script.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+steps:
+# Build 1.13
+- task: Gradle@2
+  inputs:
+    workingDirectory: '1.13'
+    gradleWrapperFile: 'gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    # testResultsFiles: '**/TEST-*.xml'
+    tasks: 'build'
+
+- task: Gradle@2
+  inputs:
+    workingDirectory: '1.12'
+    gradleWrapperFile: 'gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    tasks: 'setupCiWorkspace build'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '1.13\build-libs\?(*.jar)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    overWrite: true #Optional
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: '1.13'
+
+- task: DeleteFiles@1
+  inputs:
+    sourceFolder: '$(Build.ArtifactStagingDirectory)'
+    contents: '*.jar' 
+
+- task: CopyFiles@2
+  inputs:
+    contents: '1.12\build-libs\?(*.jar)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    overWrite: true #Optional
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: '1.12'
