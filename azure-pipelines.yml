@@ -16,13 +16,13 @@ steps:
   inputs:
     workingDirectory: '1.13'
     gradleWrapperFile: '1.13/gradlew'
-    gradleOptions: '-Xmx4096m --stacktrace --info --scan'
+    gradleOptions: '-Xmx4096m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     # testResultsFiles: '**/TEST-*.xml'
-    tasks: 'build'
+    tasks: 'build --stacktrace --info --scan'
 
 - task: CopyFiles@2
   inputs:
@@ -48,12 +48,12 @@ steps:
   inputs:
     workingDirectory: '1.12'
     gradleWrapperFile: '1.12/gradlew'
-    gradleOptions: '-Xmx4096m --stacktrace --info --scan'
+    gradleOptions: '-Xmx4096m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
-    tasks: 'setupCiWorkspace build'
+    tasks: 'setupCiWorkspace build --stacktrace --info --scan'
 
 - task: CopyFiles@2
   inputs:
