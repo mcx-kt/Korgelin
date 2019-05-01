@@ -11,12 +11,11 @@ pool:
 
 steps:
 # Build 1.13
-- script: 'cd 1.13'
 
 - task: Gradle@2
   inputs:
     # workingDirectory: '1.13'
-    gradleWrapperFile: 'gradlew'
+    gradleWrapperFile: '1.13/gradlew'
     gradleOptions: '-Xmx4096m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
@@ -36,6 +35,8 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: '1.13'
 
+# Clean up
+
 - task: DeleteFiles@1
   inputs:
     sourceFolder: '$(Build.ArtifactStagingDirectory)'
@@ -43,12 +44,9 @@ steps:
 
 # Build 1.12
 
-- script: 'cd ../1.12'
-
 - task: Gradle@2
   inputs:
-    workingDirectory: '1.12'
-    gradleWrapperFile: 'gradlew'
+    gradleWrapperFile: '1.12/gradlew'
     gradleOptions: '-Xmx4096m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
