@@ -14,7 +14,7 @@ steps:
 
 - task: Gradle@2
   inputs:
-    # workingDirectory: '1.13'
+    workingDirectory: '1.13'
     gradleWrapperFile: '1.13/gradlew'
     gradleOptions: '-Xmx4096m'
     javaHomeOption: 'JDKVersion'
@@ -26,7 +26,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: '1.13\build-libs\?(*.jar)'
+    contents: '1.13/build/libs/?(*.jar)'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
     overWrite: true #Optional
 
@@ -46,6 +46,7 @@ steps:
 
 - task: Gradle@2
   inputs:
+    workingDirectory: '1.12'
     gradleWrapperFile: '1.12/gradlew'
     gradleOptions: '-Xmx4096m'
     javaHomeOption: 'JDKVersion'
@@ -56,7 +57,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: '1.12\build-libs\?(*.jar)'
+    contents: '1.12/build/libs/?(*.jar)'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
     overWrite: true #Optional
 
