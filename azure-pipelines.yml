@@ -57,7 +57,7 @@ steps:
     publishJUnitResults: false
     tasks: 'setupCiWorkspace build --stacktrace'
 
-- bash: 'ls -1 1.12/build/libs | egrep "Korgelin-[0-9.]+-[0-9.]+-[0-9.]+-source.jar" | xargs rm'
+- bash: 'ls -1 1.12/build/libs | egrep "Korgelin-[0-9.]+-[0-9.]+-[0-9.]+-sources.jar" | xargs rm'
 
 - task: CopyFiles@2
   inputs:
