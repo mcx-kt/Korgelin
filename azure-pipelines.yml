@@ -11,9 +11,11 @@ pool:
 
 steps:
 # Build 1.13
+- script: 'cd 1.13'
+
 - task: Gradle@2
   inputs:
-    workingDirectory: '1.13'
+    # workingDirectory: '1.13'
     gradleWrapperFile: 'gradlew'
     gradleOptions: '-Xmx4096m'
     javaHomeOption: 'JDKVersion'
@@ -22,17 +24,6 @@ steps:
     publishJUnitResults: false
     # testResultsFiles: '**/TEST-*.xml'
     tasks: 'build'
-
-- task: Gradle@2
-  inputs:
-    workingDirectory: '1.12'
-    gradleWrapperFile: 'gradlew'
-    gradleOptions: '-Xmx4096m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: false
-    tasks: 'setupCiWorkspace build'
 
 - task: CopyFiles@2
   inputs:
@@ -49,6 +40,21 @@ steps:
   inputs:
     sourceFolder: '$(Build.ArtifactStagingDirectory)'
     contents: '*.jar' 
+
+# Build 1.12
+
+- script: 'cd ../1.12'
+
+- task: Gradle@2
+  inputs:
+    workingDirectory: '1.12'
+    gradleWrapperFile: 'gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    tasks: 'setupCiWorkspace build'
 
 - task: CopyFiles@2
   inputs:
