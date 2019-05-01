@@ -16,7 +16,7 @@ steps:
   inputs:
     workingDirectory: '1.13'
     gradleWrapperFile: '1.13/gradlew'
-    gradleOptions: '-Xmx4096m'
+    gradleOptions: '-Xmx4096m --stacktrace --info --scan'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
@@ -48,7 +48,7 @@ steps:
   inputs:
     workingDirectory: '1.12'
     gradleWrapperFile: '1.12/gradlew'
-    gradleOptions: '-Xmx4096m'
+    gradleOptions: '-Xmx4096m --stacktrace --info --scan'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
