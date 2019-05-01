@@ -10,37 +10,6 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 steps:
-# Build 1.13
-
-- task: Gradle@2
-  inputs:
-    workingDirectory: '1.13'
-    gradleWrapperFile: '1.13/gradlew'
-    gradleOptions: '-Xmx4096m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: false
-    # testResultsFiles: '**/TEST-*.xml'
-    tasks: 'build --stacktrace --info --scan'
-
-- task: CopyFiles@2
-  inputs:
-    contents: '1.13/build/libs/?(*.jar)'
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
-    overWrite: true #Optional
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    artifactName: '1.13'
-
-# Clean up
-
-- task: DeleteFiles@1
-  inputs:
-    sourceFolder: '$(Build.ArtifactStagingDirectory)'
-    contents: '*.jar' 
 
 # Build 1.12
 
@@ -65,3 +34,36 @@ steps:
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: '1.12'
+
+# Clean up
+
+- task: DeleteFiles@1
+  inputs:
+    sourceFolder: '$(Build.ArtifactStagingDirectory)'
+    contents: '*.jar' 
+
+
+# Build 1.13
+
+- task: Gradle@2
+  inputs:
+    workingDirectory: '1.13'
+    gradleWrapperFile: '1.13/gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    # testResultsFiles: '**/TEST-*.xml'
+    tasks: 'build --stacktrace --info --scan'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '1.13/build/libs/?(*.jar)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    overWrite: true #Optional
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: '1.13'
