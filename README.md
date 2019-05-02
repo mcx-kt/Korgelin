@@ -2,6 +2,9 @@
 Fork of
 [Shadowfacts's Forgelin](https://github.com/shadowfacts/Forgelin).
 
+**For detail: Please see
+[wiki](https://github.com/toliner/Korgelin/wiki)**
+
 ## Additions
 - Shades kotlinx-serialization-runtime
 - Support 1.13 and older version.
@@ -10,16 +13,14 @@ Fork of
 ```groovy
 repositories {
 	jcenter()
-	maven {
-		url "http://maven.shadowfacts.net/"
-	}
+	maven { url "https://dl.bintray.com/toliner/Korgelin" }
 }
 
 dependencies {
-	compile group: "net.shadowfacts", name: "Forgelin", version: "LATEST_VERSION"
+	compile group: "net.toliner", name: "Korgelin", version: "LATEST_VERSION"
 }
 ```
 
-All versions can be seen [here](http://maven.shadowfacts.net/net/shadowfacts/Forgelin/).
+All versions can be seen [here](https://bintray.com/toliner/Korgelin).
 
 **Note:** You must have the `jcenter()` call in your `repositories` block. JCenter is used to host the Kotlin coroutines libraries.
