@@ -16,6 +16,9 @@ buildscript {
 plugins {
     id "maven"
     id "com.github.johnrengelman.shadow" version "4.0.4"
+    id "com.jfrog.bintray" version "1.8.4"
+    id 'maven-publish'
+    id 'com.matthewprenger.cursegradle' version '1.2.0'
 }
 
 apply plugin: "kotlin"
@@ -104,3 +107,66 @@ reobf {
 }
 tasks.reobfShadowJar.mustRunAfter shadowJar
 tasks.build.dependsOn reobfShadowJar
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+publishing {
+    publications {
+        mavenKotlin(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            pom {
+                name = 'Korgelin'
+                description = 'A Kotlin language adaptor for Minecraft Forge'
+                url = 'https://minecraft.curseforge.com/projects/korgelin'
+                licenses {
+                    license {
+                        name = 'GNU LESSER GENERAL PUBLIC LICENSE v3.0'
+                        url = 'https://www.gnu.org/licenses/lgpl-3.0.en.html'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'toliner'
+                        name = 'toliner'
+                        email = 'toliner.rkt@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/toliner/Korgelin.git'
+                    developerConnection = 'scm:git:ssh://github.com/toliner/Korgelin.git'
+                    url = 'https://github.com/toliner/Korgelin'
+                }
+            }
+        }
+    }
+}
+
+bintray {
+    user = System.getenv("bintray-user")
+    key = System.getenv("bintray-api-key")
+    publications = ['mavenKotlin']
+    pkg {
+        repo = 'Korgelin'
+        name = 'Korgelin-1.12'
+        version {
+            name = version
+            desc = "Korgelin: $modVersion, Kotlin: $kotlinVersion, Annotations: $annotationsVersion, Coroutines: $coroutineVersion, Serialization: $serializationVersion"
+            released  = new Date()
+        }
+    }
+}
+
+curseforge {
+    project {
+        id = '320501'
+        apiKey = System.getenv("curseforge-api-key")
+        changelog = "Korgelin: $modVersion, Kotlin: $kotlinVersion, Annotations: $annotationsVersion, Coroutines: $coroutineVersion, Serialization: $serializationVersion"
+        releaseType = 'release'
+        // addGameVersion '1.13.2'
+        mainArtifact jar
+    }
+}
