@@ -18,6 +18,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "4.0.4"
     id "com.jfrog.bintray" version "1.8.4"
     id 'maven-publish'
+    id 'com.matthewprenger.cursegradle' version '1.2.0'
 }
 
 apply plugin: "kotlin"
@@ -177,5 +178,16 @@ bintray {
             desc = "Korgelin: $modVersion, Kotlin: $kotlinVersion, Annotations: $annotationsVersion, Coroutines: $coroutineVersion, Serialization: $serializationVersion"
             released  = new Date()
         }
+    }
+}
+
+curseforge {
+    project {
+        id = '320501'
+        apiKey = System.getenv("curseforge-api-key")
+        changelog = "Korgelin: $modVersion, Kotlin: $kotlinVersion, Annotations: $annotationsVersion, Coroutines: $coroutineVersion, Serialization: $serializationVersion"
+        releaseType = 'release'
+        // addGameVersion '1.13.2'
+        mainArtifact jar
     }
 }
