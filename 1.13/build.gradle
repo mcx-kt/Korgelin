@@ -181,9 +181,9 @@ bintray {
 }
 
 curseforge {
+    apiKey = System.getenv("curseforge-api-key")
     project {
         id = '320501'
-        apiKey = System.getenv("curseforge-api-key")
         changelog = "Korgelin: $modVersion, Kotlin: $kotlinVersion, Annotations: $annotationsVersion, Coroutines: $coroutineVersion, Serialization: $serializationVersion"
         releaseType = 'release'
         // addGameVersion '1.13.2'
