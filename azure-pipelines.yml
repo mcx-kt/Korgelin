@@ -61,7 +61,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: '\1.12\build\libs\?(*.jar)'
+    contents: '1.12\build\libs\?(*.jar)'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
     overWrite: true #Optional
 
