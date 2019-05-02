@@ -1,0 +1,71 @@
+# Gradle
+# Build your Java project and run tests with Gradle using a Gradle wrapper script.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- master
+
+pool:
+  # Now, vm image os must windows.
+  # Related issue: https://youtrack.jetbrains.com/issue/KT-30132
+  vmImage: 'vs2017-win2016'
+
+steps:
+
+# Build 1.13
+
+- task: Gradle@2
+  inputs:
+    workingDirectory: '1.13'
+    gradleWrapperFile: '1.13\gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    tasks: 'build --stacktrace'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '1.13\build\libs\?(*.jar)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    overWrite: true #Optional
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: '1.13'
+
+# Clean up
+
+- task: DeleteFiles@1
+  inputs:
+    sourceFolder: '$(Build.ArtifactStagingDirectory)'
+    contents: '**/*.jar' 
+
+# Build 1.12
+
+- task: Gradle@2
+  inputs:
+    workingDirectory: '1.12'
+    gradleWrapperFile: '1.12\gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    tasks: 'setupCiWorkspace build --stacktrace'
+
+- bash: 'ls -1 1.12/build/libs | egrep "Korgelin-[0-9.]+-[0-9.]+-[0-9.]+-sources.jar" | xargs -I {} rm 1.12/build/libs/{}'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '1.12\build\libs\?(*.jar)'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    overWrite: true #Optional
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: '1.12'
