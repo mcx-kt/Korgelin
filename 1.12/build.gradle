@@ -145,28 +145,37 @@ publishing {
     }
 }
 
-bintray {
-    user = System.getenv("bintray-user")
-    key = System.getenv("bintray-api-key")
-    publications = ['mavenKotlin']
-    pkg {
-        repo = 'Korgelin'
-        name = 'Korgelin-1.12'
-        version {
-            name = version
-            desc = "Korgelin: $modVersion, Kotlin: $kotlinVersion, Annotations: $annotationsVersion, Coroutines: $coroutineVersion, Serialization: $serializationVersion"
-            released  = new Date()
+if(System.getenv("bintray-api-key") != null || System.getenv()["bintray-api-key"] != null || project.hasProperty("bintrayApiKey")) {
+    bintray {
+        user = System.getenv("bintray-api-key") ?: System.getenv()["bintray-api-key"] ?: project.findProperty("bintrayApiKey")
+        key = System.getenv("bintray-user") ?: System.getenv()["bintray-user"] ?: project.findProperty("bintrayUser")
+        publications = ['mavenKotlin']
+        pkg {
+            repo = 'Korgelin'
+            name = 'Korgelin-1.12'
+            version {
+                name = version
+                desc = "Korgelin: $modVersion, Kotlin: $kotlinVersion, Annotations: $annotationsVersion, Coroutines: $coroutineVersion, Serialization: $serializationVersion"
+                released  = new Date()
+            }
         }
     }
+} else {
+    logger.info("Bintray API Key was not found. Skip.")
 }
 
-curseforge {
-    apiKey = System.getenv("curseforge-api-key")
-    project {
-        id = '320501'
-        changelog = "Korgelin: $modVersion, Kotlin: $kotlinVersion, Annotations: $annotationsVersion, Coroutines: $coroutineVersion, Serialization: $serializationVersion"
-        releaseType = 'release'
-        // addGameVersion '1.13.2'
-        mainArtifact jar
+
+if(System.getenv("curseforge-api-key") != null || System.getenv()["curseforge-api-key"] != null || project.hasProperty("curseforgeApiKey")) {
+    curseforge {
+        apiKey = System.getenv("curseforge-api-key") ?: System.getenv()["curseforge-api-key"] ?: project.findProperty("curseforgeApiKey")
+        project {
+            id = '320501'
+            changelog = "Korgelin: $modVersion, Kotlin: $kotlinVersion, Annotations: $annotationsVersion, Coroutines: $coroutineVersion, Serialization: $serializationVersion"
+            releaseType = 'release'
+            // addGameVersion '1.12.2'
+            mainArtifact jar
+        }
     }
+} else {
+    logger.info("CurseForge API Key was not found. Skip.")
 }
