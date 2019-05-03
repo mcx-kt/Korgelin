@@ -27,6 +27,7 @@ apply from: "../buildSrc/config.gradle.kts"
 
 archivesBaseName = modName + '-' + mc_version
 version = modVersion + '-' + kotlinVersion
+group = "net.toliner.korgelin"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -147,8 +148,8 @@ publishing {
 
 if(System.getenv("bintray-api-key") != null || System.getenv()["bintray-api-key"] != null || project.hasProperty("bintrayApiKey")) {
     bintray {
-        user = System.getenv("bintray-api-key") ?: System.getenv()["bintray-api-key"] ?: project.findProperty("bintrayApiKey")
-        key = System.getenv("bintray-user") ?: System.getenv()["bintray-user"] ?: project.findProperty("bintrayUser")
+        key = System.getenv("bintray-api-key") ?: System.getenv()["bintray-api-key"] ?: project.findProperty("bintrayApiKey")
+        user = System.getenv("bintray-user") ?: System.getenv()["bintray-user"] ?: project.findProperty("bintrayUser")
         publications = ['mavenKotlin']
         pkg {
             repo = 'Korgelin'

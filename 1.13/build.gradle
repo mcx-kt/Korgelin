@@ -168,8 +168,8 @@ publishing {
 
 if(System.getenv("bintray-api-key") != null || System.getenv()["bintray-api-key"] != null || project.hasProperty("bintrayApiKey")) {
     bintray {
-        user = System.getenv("bintray-api-key") ?: System.getenv()["bintray-api-key"] ?: project.findProperty("bintrayApiKey")
-        key = System.getenv("bintray-user") ?: System.getenv()["bintray-user"] ?: project.findProperty("bintrayUser")
+        key = System.getenv("bintray-api-key") ?: System.getenv()["bintray-api-key"] ?: project.findProperty("bintrayApiKey")
+        user = System.getenv("bintray-user") ?: System.getenv()["bintray-user"] ?: project.findProperty("bintrayUser")
         publications = ['mavenKotlin']
         publish = true
         pkg {
