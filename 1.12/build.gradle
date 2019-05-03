@@ -151,18 +151,19 @@ if(System.getenv("bintray-api-key") != null || System.getenv()["bintray-api-key"
         key = System.getenv("bintray-api-key") ?: System.getenv()["bintray-api-key"] ?: project.findProperty("bintrayApiKey")
         user = System.getenv("bintray-user") ?: System.getenv()["bintray-user"] ?: project.findProperty("bintrayUser")
         publications = ['mavenKotlin']
+        publish = true
         pkg {
             repo = 'Korgelin'
             name = 'Korgelin-1.12'
             version {
-                name = version
+                name = project.version
                 desc = "Korgelin: $modVersion, Kotlin: $kotlinVersion, Annotations: $annotationsVersion, Coroutines: $coroutineVersion, Serialization: $serializationVersion"
                 released  = new Date()
             }
         }
     }
 } else {
-    logger.info("Bintray API Key was not found. Skip.")
+    logger.log(LogLevel.WARN, "Bintray API Key was not found. Skip.")
 }
 
 
@@ -178,5 +179,5 @@ if(System.getenv("curseforge-api-key") != null || System.getenv()["curseforge-ap
         }
     }
 } else {
-    logger.info("CurseForge API Key was not found. Skip.")
+    logger.log(LogLevel.WARN, "CurseForge API Key was not found. Skip.")
 }
