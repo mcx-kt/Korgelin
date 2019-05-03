@@ -181,7 +181,8 @@ if(System.getenv("bintray-api-key") != null || System.getenv()["bintray-api-key"
         }
     }
 } else {
-    logger.info("Bintray API Key was not found. Skip.")
+    logger.log(LogLevel.WARN, "Bintray API Key was not found. Skip.")
+    logger.log(LogLevel.WARN, project.properties.keySet().join(", "))
 }
 
 
@@ -197,5 +198,5 @@ if(System.getenv("curseforge-api-key") != null || System.getenv()["curseforge-ap
         }
     }
 } else {
-    logger.info("CurseForge API Key was not found. Skip.")
+    logger.log(LogLevel.WARN, "CurseForge API Key was not found. Skip.")
 }
