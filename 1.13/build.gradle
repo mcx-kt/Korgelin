@@ -170,11 +170,12 @@ if(System.getenv("bintray-api-key") != null || System.getenv()["bintray-api-key"
         user = System.getenv("bintray-api-key") ?: System.getenv()["bintray-api-key"] ?: project.findProperty("bintrayApiKey")
         key = System.getenv("bintray-user") ?: System.getenv()["bintray-user"] ?: project.findProperty("bintrayUser")
         publications = ['mavenKotlin']
+        publish = true
         pkg {
             repo = 'Korgelin'
             name = 'Korgelin-1.13'
             version {
-                name = version
+                name = project.version
                 desc = "Korgelin: $modVersion, Kotlin: $kotlinVersion, Annotations: $annotationsVersion, Coroutines: $coroutineVersion, Serialization: $serializationVersion"
                 released  = new Date()
             }
@@ -182,7 +183,6 @@ if(System.getenv("bintray-api-key") != null || System.getenv()["bintray-api-key"
     }
 } else {
     logger.log(LogLevel.WARN, "Bintray API Key was not found. Skip.")
-    logger.log(LogLevel.WARN, project.properties.keySet().join(", "))
 }
 
 
