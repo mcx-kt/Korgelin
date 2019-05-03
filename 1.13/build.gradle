@@ -27,6 +27,7 @@ apply from: "../buildSrc/config.gradle.kts"
 
 archivesBaseName = modName + '-' + mc_version
 version = modVersion + '-' + kotlinVersion
+group = "net.toliner.korgelin"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8

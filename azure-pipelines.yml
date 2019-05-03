@@ -37,7 +37,7 @@ steps:
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
-    tasks: 'bintrayPublish -PbintrayUser=$(bintray-user) -PbintrayApiKey=$(bintray-api-key)'
+    tasks: 'bintrayUpload bintrayPublish -PbintrayUser=$(bintray-user) -PbintrayApiKey=$(bintray-api-key)'
 
 - task: Gradle@2
   displayName: "Publish 1.13 to CurseForge"
