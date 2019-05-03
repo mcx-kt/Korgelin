@@ -16,6 +16,7 @@ steps:
 # Build 1.13
 
 - task: Gradle@2
+  displayName: "Build 1.13"
   inputs:
     workingDirectory: '1.13'
     gradleWrapperFile: '1.13\gradlew'
@@ -24,11 +25,36 @@ steps:
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
-    tasks: 'build bintrayPublish curseforge'
+    tasks: 'build'
+
+- task: Gradle@2
+  displayName: "Publish 1.13 to bintray"
+  inputs:
+    workingDirectory: '1.13'
+    gradleWrapperFile: '1.13\gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    tasks: 'bintrayPublish -PbintrayUser=$(bintray-user) -PbintrayApiKey=$(bintray-api-key)'
+
+- task: Gradle@2
+  displayName: "Publish 1.13 to CurseForge"
+  inputs:
+    workingDirectory: '1.13'
+    gradleWrapperFile: '1.13\gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    tasks: 'curseforge -PcurseforgeApiKey=$(curseforge-api-key)'
 
 # Build 1.12
 
 - task: Gradle@2
+  displayName: "Build 1.12"
   inputs:
     workingDirectory: '1.12'
     gradleWrapperFile: '1.12\gradlew'
@@ -38,3 +64,27 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     tasks: 'setupCiWorkspace build bintrayPublish curseforge'
+
+- task: Gradle@2
+  displayName: "Publish 1.12 to bintray"
+  inputs:
+    workingDirectory: '1.12'
+    gradleWrapperFile: '1.12\gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    tasks: 'bintrayPublish -PbintrayUser=$(bintray-user) -PbintrayApiKey=$(bintray-api-key)'
+
+- task: Gradle@2
+  displayName: "Publish 1.12 to CurseForge"
+  inputs:
+    workingDirectory: '1.12'
+    gradleWrapperFile: '1.12\gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    tasks: 'curseforge -PcurseforgeApiKey=$(curseforge-api-key)'
