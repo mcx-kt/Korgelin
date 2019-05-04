@@ -70,8 +70,7 @@ class KotlinModContainer(
             throw ModLoadingException(modInfo, event.fromStage(), "fml.modloading.failedtoloadmod", e, modClass)
         }
         logger.debug(LOADING, "Injecting Automatic event subscribers for ${getModId()}")
-        // @SubscribeEventのついた処理をEventBusに登録する部分？
-        AutomaticEventSubscriber.inject(this, this.scanResult, this.modClass.java.classLoader)
+        KotlinAutomaticEventSucscriber.inject(this, this.scanResult, this.modClass.java.classLoader)
         logger.debug(LOADING, "Completed Automatic event subscribers for ${getModId()}")
     }
 
