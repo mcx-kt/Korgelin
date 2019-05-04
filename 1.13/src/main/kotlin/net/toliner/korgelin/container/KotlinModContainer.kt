@@ -44,10 +44,10 @@ class KotlinModContainer(
 
     private val fireEvent = fun(lifecycleEvent: LifecycleEventProvider.LifecycleEvent) {
         val event = lifecycleEvent.getOrBuildEvent(this)
-        logger.debug(LOADING, "Firing event for modid ${getModId()} : $event")
+        logger.loading("Firing event for modid ${getModId()} : $event")
         try {
             eventBus.post(event)
-            logger.debug(LOADING, "Fired event for modid ${getModId()} : $event")
+            logger.loading("Fired event for modid ${getModId()} : $event")
         } catch (e: Throwable) {
             logger.error(LOADING, "Caught exception during event $event dispatch for modid ${getModId()}")
             throw ModLoadingException(modInfo, lifecycleEvent.fromStage(), "fml.modloading.errorduringevent", e)
@@ -60,18 +60,18 @@ class KotlinModContainer(
 
     private val constructMod = fun(event: LifecycleEventProvider.LifecycleEvent) {
         try {
-            logger.debug(LOADING, "Loading mod instance $modId of type $className")
+            logger.loading("Loading mod instance $modId of type $className")
             Class.forName(className)  // Invoke this to initialize class.
             modInstance = modClass.objectInstance
                     ?: throw IllegalStateException("KotlinModClass must bbe object declaration.")
-            logger.debug(LOADING, "Loaded mod instance $modId of type $className")
+            logger.loading("Loaded mod instance $modId of type $className")
         } catch (e: Throwable) {
             logger.error(LOADING, "Failed to load mod instance. ModID: ${getModId()}, class $className")
             throw ModLoadingException(modInfo, event.fromStage(), "fml.modloading.failedtoloadmod", e, modClass)
         }
-        logger.debug(LOADING, "Injecting Automatic event subscribers for ${getModId()}")
+        logger.loading("Injecting Automatic event subscribers for ${getModId()}")
         KotlinAutomaticEventSucscriber.inject(this, this.scanResult, this.modClass.java.classLoader)
-        logger.debug(LOADING, "Completed Automatic event subscribers for ${getModId()}")
+        logger.loading("Completed Automatic event subscribers for ${getModId()}")
     }
 
     private val initMod = fun(_: LifecycleEventProvider.LifecycleEvent) {
@@ -98,9 +98,9 @@ class KotlinModContainer(
         configHandler = Optional.of(Consumer { event -> this.eventBus.post(event) })
         try {
             modClass = Class.forName(className, false, modClassLoader).kotlin
-            logger.debug(LOADING, "Loaded modclass $className with $modClassLoader")
+            logger.loading( "Loaded modclass $className with $modClassLoader")
         } catch (e: Throwable) {
-            logger.error(LOADING, "Failed to load class $className", e)
+            logger.loading("Failed to load class $className", e)
             throw ModLoadingException(info, ModLoadingStage.CONSTRUCT, "fml.modloading.failedtoloadmodclass", e)
         }
     }

@@ -14,11 +14,11 @@ internal class KotlinModTarget(val className: String, val modId: String) : IModL
         try {
             val containerClass = Thread.currentThread().contextClassLoader.loadClass("net.toliner.forgelin.container.KotlinModContainer")
             //val containerClass = Class.forName("net.toliner.forgelin.KotlinModContainer", true, Thread.currentThread().contextClassLoader)
-            logger.debug(LOADING, "Loading KotlinModContainer from classloader $${Thread.currentThread().contextClassLoader} - got ${containerClass.classLoader}")
+            logger.loading("Loading KotlinModContainer from classloader $${Thread.currentThread().contextClassLoader} - got ${containerClass.classLoader}")
             val constructor = containerClass.getConstructor(IModInfo::class.java, ClassLoader::class.java, ModFileScanData::class.java, String::class.java)
             return constructor.newInstance(info, modClassLoader, modFileScanResults, className) as T
         } catch (e: Throwable) {
-            logger.fatal(LOADING, "Unable to load KotlinModContainer, wut?", e)
+            logger.loading("Unable to load KotlinModContainer, wut?", e)
             throw RuntimeException(e)
         }
     }
