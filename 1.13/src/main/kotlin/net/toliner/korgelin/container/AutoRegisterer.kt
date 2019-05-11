@@ -20,6 +20,7 @@ import kotlin.reflect.full.declaredMemberProperties
 object AutoRegisterer {
     private val logger = LogManager.getLogger()!!
     private val targetType = Type.getType(KotlinModContentRegistry::class.java)
+    private val itemBlocks = mutableListOf<ItemBlock>()
 
     @Suppress("UNCHECKED_CAST")
     fun inject(event: RegistryEvent.Register<*>, mod: KotlinModContainer, scanData: ModFileScanData, loader: ClassLoader) {
@@ -51,6 +52,9 @@ object AutoRegisterer {
                         logger.loading("Failed to load mod class ${ad.classType} for @KotlinContentRegistry annotation", it)
                     }
                 }
+        for (itemBlock in itemBlocks) {
+            registry.register(itemBlock)
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -66,10 +70,15 @@ object AutoRegisterer {
                                 ?: throw IllegalStateException("@KotlinContentRegistry class must object declaration.")
                         targetClass.declaredMemberProperties
                                 .mapNotNull {
-                                    runCatching { it as KProperty1<Any, Block>? }
+                                    runCatching { it as KProperty1<Any, BlockAutoRegistrable>? }
                                             .getOrDefault(null)?.get(instance)
                                 }
-                                .forEach { registry.register(it) }
+                                .forEach {
+                                    registry.register(it)
+                                    val itemBlock = it.itemBlock
+                                            ?: ItemBlock(it, it.itemBlockProperty).apply { registryName = it.registryName }
+                                    itemBlocks += itemBlock
+                                }
                     }.onFailure {
                         logger.loading("Failed to load mod class ${ad.classType} for @KotlinContentRegistry annotation", it)
                     }
