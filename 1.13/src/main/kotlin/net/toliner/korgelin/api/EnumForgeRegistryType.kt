@@ -1,4 +1,4 @@
-package net.toliner.korgelin
+package net.toliner.korgelin.api
 
 enum class EnumForgeRegistryType {
     ITEM,

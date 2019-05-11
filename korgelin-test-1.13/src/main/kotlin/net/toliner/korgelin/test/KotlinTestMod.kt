@@ -4,7 +4,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent
-import net.toliner.korgelin.KotlinMod
+import net.toliner.korgelin.api.KotlinMod
 import net.toliner.korgelin.container.KotlinModLoadingContext
 import org.apache.logging.log4j.LogManager
 

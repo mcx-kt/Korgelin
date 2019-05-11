@@ -1,7 +1,7 @@
 package net.toliner.korgelin.test
 
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
-import net.toliner.korgelin.KotlinEventSubscriber
+import net.toliner.korgelin.api.KotlinEventSubscriber
 import org.apache.logging.log4j.LogManager
 
 @KotlinEventSubscriber("korgelin-test")
