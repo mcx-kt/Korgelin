@@ -2,13 +2,15 @@ package net.toliner.korgelin.container
 
 import net.minecraft.block.Block
 import net.minecraft.item.Item
+import net.minecraft.item.ItemBlock
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.loading.moddiscovery.ModAnnotation
 import net.minecraftforge.forgespi.language.ModFileScanData
 import net.minecraftforge.registries.GameData
 import net.minecraftforge.registries.IForgeRegistry
-import net.toliner.korgelin.EnumForgeRegistryType
-import net.toliner.korgelin.KotlinModContentRegistry
+import net.toliner.korgelin.api.BlockAutoRegistrable
+import net.toliner.korgelin.api.EnumForgeRegistryType
+import net.toliner.korgelin.api.KotlinModContentRegistry
 import net.toliner.korgelin.loading
 import org.apache.logging.log4j.LogManager
 import org.objectweb.asm.Type

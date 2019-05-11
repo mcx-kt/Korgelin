@@ -6,7 +6,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment
 import net.minecraftforge.fml.loading.LogMarkers
 import net.minecraftforge.fml.loading.moddiscovery.ModAnnotation
 import net.minecraftforge.forgespi.language.ModFileScanData
-import net.toliner.korgelin.KotlinEventSubscriber
+import net.toliner.korgelin.api.KotlinEventSubscriber
 import net.toliner.korgelin.loading
 import org.apache.logging.log4j.LogManager
 import org.objectweb.asm.Type
