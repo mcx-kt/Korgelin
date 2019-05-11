@@ -12,8 +12,12 @@ import org.apache.logging.log4j.LogManager
 import org.objectweb.asm.Type
 
 object KotlinAutomaticEventSucscriber {
-    val logger = LogManager.getLogger()!!
-    val targetAnnotation = Type.getType(KotlinEventSubscriber::class.java)
+
+    private val busDefault = Mod.EventBusSubscriber.Bus.FORGE
+    private val targetDefault = listOf(Dist.CLIENT, Dist.DEDICATED_SERVER)
+
+    private val logger = LogManager.getLogger()!!
+    private val targetAnnotation = Type.getType(KotlinEventSubscriber::class.java)!!
 
     @Suppress("UNCHECKED_CAST")
     fun inject(mod: KotlinModContainer, scanData: ModFileScanData, loader: ClassLoader) {
@@ -21,10 +25,11 @@ object KotlinAutomaticEventSucscriber {
         scanData.annotations
                 .filter { targetAnnotation == it.annotationType }
                 .forEach { ad ->
-                    val sides = (ad.annotationData["target"] as List<ModAnnotation.EnumHolder>)
-                            .map { Dist.valueOf(it.value) }
+                    val sides = (ad.annotationData["target"] as List<ModAnnotation.EnumHolder>?)
+                            ?.map { Dist.valueOf(it.value) } ?: targetDefault
                     val modId = ad.annotationData["modId"] as String
-                    val bus = Mod.EventBusSubscriber.Bus.valueOf((ad.annotationData["bus"] as ModAnnotation.EnumHolder).value)
+                    val bus = (ad.annotationData["bus"] as ModAnnotation.EnumHolder?)?.value
+                            ?.let { Mod.EventBusSubscriber.Bus.valueOf(it) } ?: busDefault
                     if (mod.modId == modId && sides.contains(FMLEnvironment.dist)) {
                         try {
                             logger.loading("Auto-subscribing ${ad.classType.className} to $bus")
