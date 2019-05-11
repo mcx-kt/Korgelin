@@ -20,7 +20,7 @@ import kotlin.reflect.full.declaredMemberProperties
 internal object AutoRegisterer {
     private val logger = LogManager.getLogger()!!
     private val targetType = Type.getType(KotlinModContentRegistry::class.java)
-    private val itemBlocks = mutableListOf<ItemBlock>()
+    private val itemBlocks = mutableMapOf<String, MutableList<ItemBlock>>()
 
     @Suppress("UNCHECKED_CAST")
     fun inject(event: RegistryEvent.Register<*>, mod: KotlinModContainer, scanData: ModFileScanData, loader: ClassLoader) {
@@ -52,8 +52,12 @@ internal object AutoRegisterer {
                         logger.loading("Failed to load mod class ${ad.classType} for @KotlinContentRegistry annotation", it)
                     }
                 }
-        for (itemBlock in itemBlocks) {
-            registry.register(itemBlock)
+        val list = itemBlocks[mod.modId]
+        if (list != null) {
+            for (itemBlock in list) {
+                registry.register(itemBlock)
+            }
+            itemBlocks.remove(mod.modId)
         }
     }
 
@@ -78,7 +82,7 @@ internal object AutoRegisterer {
                                     registry.register(it)
                                     val itemBlock = it.itemBlock
                                             ?: ItemBlock(it, it.itemBlockProperty).apply { registryName = it.registryName }
-                                    itemBlocks += itemBlock
+                                    itemBlocks.getOrPut(mod.modId, ::mutableListOf) += itemBlock
                                 }
                     }.onFailure {
                         logger.loading("Failed to load mod class ${ad.classType} for @KotlinContentRegistry annotation", it)
