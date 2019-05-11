@@ -87,6 +87,14 @@ class KotlinModContainer(
 
     }
 
+    @Suppress("UNCHECKED_CAST")
+    val loadRegistries = fun(event: LifecycleEventProvider.LifecycleEvent) {
+        val registerEvent = event.getOrBuildEvent(this) as RegistryEvent.Register<*>
+        logger.loading("Injecting automatic registerer for ${getModId()}")
+        AutoRegisterer.inject(registerEvent, this, scanResult, modClassLoader)
+        logger.loading("Completed automatic registering for ${getModId()}")
+    }
+
     // Constructor ================================================================================
 
     init {
@@ -101,7 +109,7 @@ class KotlinModContainer(
         contextExtension = Supplier { KotlinModLoadingContext(this) }
         createTrigger(ModLoadingStage.CONSTRUCT, constructMod, false)
         createTrigger(ModLoadingStage.CREATE_REGISTRIES)
-        createTrigger(ModLoadingStage.LOAD_REGISTRIES)
+        createTrigger(ModLoadingStage.LOAD_REGISTRIES, loadRegistries)
         createTrigger(ModLoadingStage.COMMON_SETUP, preinitMod)
         createTrigger(ModLoadingStage.SIDED_SETUP)
         createTrigger(ModLoadingStage.ENQUEUE_IMC, initMod)
