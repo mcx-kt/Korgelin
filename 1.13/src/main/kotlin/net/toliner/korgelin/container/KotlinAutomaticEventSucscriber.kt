@@ -11,7 +11,7 @@ import net.toliner.korgelin.loading
 import org.apache.logging.log4j.LogManager
 import org.objectweb.asm.Type
 
-object KotlinAutomaticEventSucscriber {
+internal object KotlinAutomaticEventSucscriber {
 
     private val busDefault = Mod.EventBusSubscriber.Bus.FORGE
     private val targetDefault = listOf(Dist.CLIENT, Dist.DEDICATED_SERVER)

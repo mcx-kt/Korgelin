@@ -10,7 +10,7 @@ import java.util.function.Consumer
 import java.util.function.Supplier
 
 @Suppress("UNUSED")
-class KotlinModLanguageProvider : IModLanguageProvider {
+internal class KotlinModLanguageProvider : IModLanguageProvider {
 
     companion object {
         val logger = LogManager.getLogger(KotlinModLanguageProvider::class.java)

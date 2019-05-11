@@ -17,7 +17,7 @@ import org.objectweb.asm.Type
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberProperties
 
-object AutoRegisterer {
+internal object AutoRegisterer {
     private val logger = LogManager.getLogger()!!
     private val targetType = Type.getType(KotlinModContentRegistry::class.java)
     private val itemBlocks = mutableListOf<ItemBlock>()
