@@ -8,8 +8,8 @@ import net.minecraftforge.fml.loading.moddiscovery.ModAnnotation
 import net.minecraftforge.forgespi.language.ModFileScanData
 import net.minecraftforge.registries.GameData
 import net.minecraftforge.registries.IForgeRegistry
-import net.toliner.korgelin.api.BlockAutoRegistrable
 import net.toliner.korgelin.api.EnumForgeRegistryType
+import net.toliner.korgelin.api.IAutoRegistrableBlock
 import net.toliner.korgelin.api.KotlinModContentRegistry
 import net.toliner.korgelin.loading
 import org.apache.logging.log4j.LogManager
@@ -70,10 +70,11 @@ object AutoRegisterer {
                                 ?: throw IllegalStateException("@KotlinContentRegistry class must object declaration.")
                         targetClass.declaredMemberProperties
                                 .mapNotNull {
-                                    runCatching { it as KProperty1<Any, BlockAutoRegistrable>? }
+                                    runCatching { it as KProperty1<Any, Block>? }
                                             .getOrDefault(null)?.get(instance)
                                 }
-                                .forEach {
+                                .onEach {
+                                    if (it !is IAutoRegistrableBlock) return@onEach
                                     registry.register(it)
                                     val itemBlock = it.itemBlock
                                             ?: ItemBlock(it, it.itemBlockProperty).apply { registryName = it.registryName }
