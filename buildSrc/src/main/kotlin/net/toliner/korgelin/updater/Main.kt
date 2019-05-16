@@ -34,10 +34,11 @@ lateinit var configFile: File
 
 @KtorExperimentalAPI
 fun main() {
-    val configMap = analyzeConfigScript().toMutableMap()
-    val currentVersionMap = getCurrentVersion(configMap)
+    val currentConfigMap = analyzeConfigScript()
+    val newConfigMap = currentConfigMap.toMutableMap()
+    val currentVersionMap = getCurrentVersion(currentConfigMap)
 
-    println("Current: ${configMap.toList().joinToString()}")
+    println("Current: ${currentConfigMap.toList().joinToString()}")
 
     /*
     configFile.delete()
@@ -60,22 +61,31 @@ fun main() {
         } else Version(latestVersionString)
         val currentVersion = currentVersionMap[propName] ?: error("propName is illegal.")
         if (currentVersion < latestVersion) {
-            configMap[propName] = latestVersion.toString()
+            newConfigMap[propName] = latestVersion.toString()
         }
     }
 
-    val script = buildString {
-        configMap.forEach { (k, v) ->
-            append("extra[\"")
-            append(k)
-            append("\"] = \"")
-            append(v)
-            appendln('"')
-        }
-    }.removeSuffix("\n")
+    val file = File(".kotlinUpdate")
+    file.createNewFile()
+    if (Version(currentConfigMap["kotlinVersion"] ?: error("Hello, World!")) < Version(newConfigMap["kotlinVersion"]
+                    ?: error("WTF !?!?"))) {
+        file.writeText("true")
+        val script = buildString {
+            newConfigMap.forEach { (k, v) ->
+                append("extra[\"")
+                append(k)
+                append("\"] = \"")
+                append(v)
+                appendln('"')
+            }
+        }.removeSuffix("\n")
 
-    configFile.writeText(script)
-    println("New: ${configMap.toList().joinToString()}")
+        configFile.writeText(script)
+        println("New: ${newConfigMap.toList().joinToString()}")
+    } else {
+        file.writeText("false")
+        println("No kotlin update.")
+    }
     exitProcess(0)
 }
 
