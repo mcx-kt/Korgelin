@@ -46,7 +46,9 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                
+                Korgelin {
+                    source sourceSets.main
+                }
             }
         }
 

@@ -3,13 +3,14 @@ package net.toliner.korgelin
 import net.minecraftforge.forgespi.language.ILifecycleEvent
 import net.minecraftforge.forgespi.language.IModLanguageProvider
 import net.minecraftforge.forgespi.language.ModFileScanData
+import net.toliner.korgelin.api.KotlinMod
 import org.apache.logging.log4j.LogManager
 import org.objectweb.asm.Type
 import java.util.function.Consumer
 import java.util.function.Supplier
 
 @Suppress("UNUSED")
-class KotlinModLanguageProvider : IModLanguageProvider {
+internal class KotlinModLanguageProvider : IModLanguageProvider {
 
     companion object {
         val logger = LogManager.getLogger(KotlinModLanguageProvider::class.java)
