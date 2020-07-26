@@ -51,6 +51,44 @@ steps:
     publishJUnitResults: false
     tasks: 'curseforge -PcurseforgeApiKey=$(curseforge-api-key)'
 
+# Build 1.15
+
+- task: Gradle@2
+  displayName: "Build 1.15"
+  inputs:
+    workingDirectory: '1.15'
+    gradleWrapperFile: '1.15\gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    tasks: 'build'
+
+- task: Gradle@2
+  displayName: "Publish 1.15 to bintray"
+  inputs:
+    workingDirectory: '1.15'
+    gradleWrapperFile: '1.15\gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    tasks: 'bintrayUpload bintrayPublish -PbintrayUser=$(bintray-user) -PbintrayApiKey=$(bintray-api-key)'
+
+- task: Gradle@2
+  displayName: "Publish 1.15 to CurseForge"
+  inputs:
+    workingDirectory: '1.15'
+    gradleWrapperFile: '1.15\gradlew'
+    gradleOptions: '-Xmx4096m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    tasks: 'curseforge -PcurseforgeApiKey=$(curseforge-api-key)'
+
 # Build 1.12
 
 - task: Gradle@2
